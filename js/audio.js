@@ -1,0 +1,4 @@
+let soundOn=true;
+let audioCtx=null;
+function beep(){if(!soundOn)return;try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type="sine";o.frequency.value=520+(state.todayJaps%5)*90;g.gain.setValueAtTime(.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.13,audioCtx.currentTime+.008);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.13);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.14)}catch(e){}}
+function malaSound(){if(!soundOn)return;try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();[660,880,1100].forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(audioCtx.destination);o.start(audioCtx.currentTime+i*.12);o.stop(audioCtx.currentTime+i*.12+.1)})}catch(e){}}

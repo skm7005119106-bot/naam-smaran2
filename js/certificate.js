@@ -1,0 +1,1 @@
+function milestoneInfo(){const n=state.totalJaps;if(n>=10000)return["महान साधना","10,000 Naam Jap पूरे हुए।"];if(n>=1000)return["Naam Sadhak","1,000 Naam Jap पूरे हुए।"];if(n>=108)return["पहली माला","108 Naam Jap पूरे हुए।"];if(n>0)return["पहला जाप","आपकी Naam Smaran यात्रा शुरू हो गई।"];return["First Jap","Begin your Naam Smaran journey."]}
