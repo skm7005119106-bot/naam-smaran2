@@ -1,12 +1,150 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#3e000c"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.json"><link rel="stylesheet" href="css/style.css"><title>Naam Smaran</title></head><body>
-<div id="splash" class="splash"><div class="splash-ring"><div class="splash-om">ॐ</div></div><div id="splashName" class="splash-name">राधा</div><div class="splash-sub">नाम स्मरण • Naam Jap</div><div class="wave"><i></i><i></i><i></i><i></i><i></i></div></div>
-<div id="app" class="app hidden"><header class="topbar"><div><b>नाम स्मरण</b><small>Naam Smaran · Naam Jap</small></div><button id="soundBtn" class="icon">🔊</button></header>
-<main class="screen">
-<section id="home" class="page active"><div class="hero"><small>ॐ श्री नाम स्मरण</small><h1>मन शांत करें,<br><em>नाम जप करें</em></h1><p>“Naam jap karte rahiye, prem aur shraddha ke saath.”</p></div><div class="stats"><div><b id="homeToday">0</b><small>आज का जप</small></div><div><b id="homeMala">0</b><small>आज की माला</small></div><div><b id="homeTotal">0</b><small>कुल जप</small></div></div><div class="card"><h3>आज का संकल्प</h3><strong id="homeMantra">Radha</strong><button class="gold" data-go="jap">जप शुरू करें</button></div><div class="card quote">“The repetition of the Naam is the simplest path to the Divine.”</div></section>
-<section id="jap" class="page"><div class="japhead"><small>आज का जप</small><h2 id="japName">Radha</h2><p>हर स्पर्श = 1 जाप</p></div>
-<div class="beadbox"><div class="beadtitle"><span>माला प्रगति</span><b id="progressText">0 / 108</b></div><div id="beads" class="beads"></div><div class="bar"><i id="progressBar"></i></div></div>
-<div class="counterarea"><button id="counter" class="counter"><span class="ring"></span><b id="counterName">Radha</b><strong id="count">0</strong><small>/ 108 TAP</small></button></div><div class="actions"><button id="undoBtn">↶ Undo</button><button id="resetBtn">Reset Mala</button></div></section>
-<section id="naam" class="page"><div class="pagehead"><small>आप का मंत्र</small><h2>Naam चुनें</h2></div><div id="naamList" class="naamlist"></div><div class="card custom"><h3>Custom Naam</h3><div><input id="customNaam" placeholder="जैसे Radhe Radhe"><button id="addNaam" class="gold">Add</button></div></div></section>
-<section id="profile" class="page"><div class="profile card"><div>🙏</div><h2 id="profileName">Asush</h2><p id="profileMantra">Radha</p></div><div class="stats"><div><b id="profileTotal">0</b><small>Total Jap</small></div><div><b id="profileMalas">0</b><small>Total Mala</small></div><div><b id="profileStreak">0</b><small>Streak</small></div></div><div class="card"><h3>Milestone</h3><p id="milestoneText">🌸 पहला जाप — अपनी Naam Smaran यात्रा शुरू करें।</p></div><button id="editProfile" class="wide">Edit Profile</button></section>
-</main><nav class="nav"><button class="active" data-nav="home"><b>⌂</b><small>Home</small></button><button data-nav="jap"><b>108</b><small>Jap</small></button><button data-nav="naam"><b>ॐ</b><small>Naam</small></button><button data-nav="profile"><b>●</b><small>Profile</small></button></nav></div><div id="toast" class="toast">🌸 1 Mala Complete 🙏</div>
-<script src="js/state.js"></script><script src="js/audio.js"></script><script src="js/certificate.js"></script><script src="js/app.js"></script><script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script></body></html>
+<!doctype html>
+<html lang="hi" translate="no" class="notranslate">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#3e000c">
+  <meta name="google" content="notranslate">
+  <meta name="description" content="Naam Smaran — offline Naam Jap counter">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Naam Smaran</title>
+</head>
+<body>
+<div id="app">
+  <section id="splash" class="splash screen" aria-label="Naam Smaran loading">
+    <div class="splash-orbit" aria-hidden="true">
+      <span>राधा</span><span>कृष्ण</span><span>राम</span><span>ॐ</span><span>सिया राम</span><span>हरे राम</span><span>हरे कृष्ण</span><span>राधे</span>
+    </div>
+    <div class="splash-core">
+      <img src="icons/icon-512.png" alt="Naam Smaran" class="splash-icon">
+      <div class="splash-flare"></div>
+    </div>
+    <h1>नाम स्मरण</h1>
+    <p>Naam Smaran • Naam Jap</p>
+    <div class="splash-loader"><i></i></div>
+  </section>
+
+  <section id="onboarding" class="screen hidden">
+    <div class="panel onboarding-panel">
+      <img src="icons/icon-192.png" class="small-icon" alt="">
+      <h1>नाम स्मरण</h1>
+      <p class="muted">अपना नाम और पहला जाप नाम चुनें।</p>
+      <label for="userNameInput">आपका नाम</label>
+      <input id="userNameInput" type="text" maxlength="40" autocomplete="name" placeholder="अपना नाम लिखें">
+      <label>जाप नाम</label>
+      <div id="mantraChoices" class="choice-grid">
+        <button type="button" data-mantra="Radha">🌸 Radha</button>
+        <button type="button" data-mantra="Krishna">🪷 Krishna</button>
+        <button type="button" data-mantra="Ram">🙏 Ram</button>
+        <button type="button" data-mantra="Siya Ram">🌺 Siya Ram</button>
+        <button type="button" data-mantra="Om">ॐ Om</button>
+        <button type="button" data-mantra="Custom">✦ Custom</button>
+      </div>
+      <input id="customMantraInput" class="hidden" type="text" maxlength="40" placeholder="अपना नाम लिखें">
+      <button id="startBtn" type="button" class="gold-btn large-btn">नाम स्मरण शुरू करें 🙏</button>
+    </div>
+  </section>
+
+  <section id="mainApp" class="hidden app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="app-title">नाम स्मरण</div>
+        <div class="app-subtitle">Naam Smaran • Naam Jap</div>
+      </div>
+      <button id="soundToggle" class="icon-btn" type="button" aria-label="Sound">🔊</button>
+    </header>
+
+    <main id="content" class="content">
+      <section id="homeTab" class="tab active">
+        <div class="hero-card">
+          <div class="eyebrow">श्री नाम स्मरण</div>
+          <h2>मन शांत करें,<br>नाम जप करें</h2>
+          <p>“Naam jap karte rahiye, prem aur shraddha ke saath.”</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat"><b id="homeJaps">0</b><span>आज का जाप</span></div>
+          <div class="stat"><b id="homeMalas">0</b><span>आज की माला</span></div>
+          <div class="stat"><b id="homeTotal">0</b><span>कुल जाप</span></div>
+        </div>
+        <div class="card sankalp-card">
+          <div class="card-title-row"><h3>आज का संकल्प</h3><span>🙏</span></div>
+          <p id="homeMantra" class="selected-mantra">Radha</p>
+          <button id="homeStart" type="button" class="gold-btn">जप शुरू करें</button>
+        </div>
+        <div class="card quote">“The repetition of the Naam is the simplest path to the Divine.”</div>
+      </section>
+
+      <section id="japTab" class="tab">
+        <div class="jap-head">
+          <div class="eyebrow">आज का जाप</div>
+          <h2 id="japMantra">Radha</h2>
+          <p>हर स्पर्श = 1 जाप</p>
+        </div>
+        <div class="bead-progress-card">
+          <div class="progress-meta"><span>माला</span><b id="progressText">0 / 108</b></div>
+          <div class="progress"><i id="progressBar"></i></div>
+          <div class="beads" id="beads" aria-label="108 bead progress"></div>
+        </div>
+        <div class="counter-wrap">
+          <button id="japCircle" class="jap-circle" type="button" aria-label="Tap to chant">
+            <span class="ring ring-1"></span><span class="ring ring-2"></span>
+            <span class="circle-mantra" id="circleMantra">Radha</span>
+            <span class="circle-count" id="circleCount">0</span>
+            <span class="circle-label">/ 108</span>
+            <span class="circle-hint">TAP • JAP</span>
+          </button>
+        </div>
+        <div class="jap-actions">
+          <button id="undoBtn" type="button" class="secondary-btn">↩ Undo</button>
+          <button id="resetBtn" type="button" class="secondary-btn">Reset Mala</button>
+        </div>
+      </section>
+
+      <section id="naamTab" class="tab">
+        <div class="section-head"><div class="eyebrow">आपका मंत्र</div><h2>Naam चुनें</h2></div>
+        <div id="naamList" class="naam-list"></div>
+        <div class="card">
+          <h3>Custom Naam</h3>
+          <div class="inline"><input id="newNaam" type="text" maxlength="40" placeholder="जैसे Radhe Radhe"><button id="addNaam" type="button" class="gold-btn small">Add</button></div>
+        </div>
+      </section>
+
+      <section id="profileTab" class="tab">
+        <div class="profile-card">
+          <div class="avatar">🙏</div>
+          <h2 id="profileName">Sadhak</h2>
+          <p id="profileMantra">Radha</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat"><b id="profileTotal">0</b><span>Total Jap</span></div>
+          <div class="stat"><b id="profileMala">0</b><span>Total Mala</span></div>
+          <div class="stat"><b id="profileStreak">0</b><span>Streak</span></div>
+        </div>
+        <div class="card"><h3>Milestone</h3><div class="milestone"><span>🌸</span><div><b id="milestoneTitle">First Jap</b><small id="milestoneText">अपनी नाम स्मरण यात्रा शुरू करें।</small></div></div></div>
+        <button id="editProfile" type="button" class="secondary-btn full">Edit Profile</button>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button type="button" data-tab="homeTab" class="nav-item active"><span>⌂</span><small>Home</small></button>
+      <button type="button" data-tab="japTab" class="nav-item"><span>108</span><small>Jap</small></button>
+      <button type="button" data-tab="naamTab" class="nav-item"><span>ॐ</span><small>Naam</small></button>
+      <button type="button" data-tab="profileTab" class="nav-item"><span>◉</span><small>Profile</small></button>
+    </nav>
+  </section>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="flash" class="flash"></div>
+<script src="js/state.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/certificate.js"></script>
+<script src="js/app.js"></script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}</script>
+</body>
+</html>
