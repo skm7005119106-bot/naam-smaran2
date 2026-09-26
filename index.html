@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Naam Smaran</title>
+<meta name="theme-color" content="#2f0810" />
+<meta name="description" content="A simple, beautiful Naam Jap counter - offline, private, and always with you." />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Naam Smaran" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============================ SPLASH ============================ -->
+  <div id="splash">
+    <div class="om-mark">ॐ</div>
+    <h1>Naam Smaran</h1>
+    <p>जप करें, शांति पाएं</p>
+  </div>
+
+  <!-- ======================= FIRST-LAUNCH SETUP ====================== -->
+  <div id="setup" style="display:none;">
+    <div class="setup-title">Welcome 🙏</div>
+    <p class="setup-sub">Let's set up your Jap space. This only takes a moment, and you can change it anytime from your Profile.</p>
+
+    <label class="field-label" for="setupNameInput">Your Name</label>
+    <input class="text-input" id="setupNameInput" type="text" maxlength="40" placeholder="Enter your name" autocomplete="off" />
+
+    <label class="field-label">Choose Your Naam</label>
+    <div class="naam-grid" id="setupNaamGrid"></div>
+
+    <button class="btn-primary" id="setupContinueBtn" disabled>Begin My Jap Journey</button>
+  </div>
+
+  <!-- ============================ SCREENS ============================ -->
+  <div id="screens">
+
+    <!-- ---------- HOME ---------- -->
+    <section class="screen" id="screen-home">
+      <div class="top-bar">
+        <span class="app-name">Naam Smaran</span>
+        <span class="today-date" id="homeDate"></span>
+      </div>
+
+      <div class="greeting-card">
+        <p class="greet-line" id="greetLine">Radhe Radhe 🙏</p>
+        <p class="greet-sub" id="greetSub">May your day be filled with peace.</p>
+        <span class="naam-pill" id="homeNaamPill">Radha</span>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-chip">
+          <span class="stat-value" id="homeTodayJap">0</span>
+          <span class="stat-label">Today's Jap</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-value" id="homeTotalJap">0</span>
+          <span class="stat-label">Total Jap</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-value" id="homeTotalMala">0</span>
+          <span class="stat-label">Total Mala</span>
+        </div>
+      </div>
+
+      <button class="begin-btn" id="homeBeginBtn">Begin Jap 🙏</button>
+
+      <p class="quote-line" id="homeQuote">"The repetition of the Naam is the simplest path to the Divine."</p>
+    </section>
+
+    <!-- ---------- JAP ---------- -->
+    <section class="screen" id="screen-jap">
+      <div class="jap-naam-label" id="japNaamLabel">Radha</div>
+      <div class="jap-cycle-label">Tap the circle for every Jap</div>
+
+      <div class="jap-circle-wrap">
+        <svg class="jap-ring" viewBox="0 0 200 200">
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f6dc9c"/>
+              <stop offset="100%" stop-color="#ff8a3d"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-track" cx="100" cy="100" r="92"></circle>
+          <circle class="ring-progress" id="ringProgress" cx="100" cy="100" r="92"
+                  stroke-dasharray="578" stroke-dashoffset="578"></circle>
+        </svg>
+        <button class="jap-circle" id="japCircleBtn" aria-label="Tap to count one Jap">
+          <span class="count-main"><span id="japCurrent">0</span></span>
+          <span class="count-of">of 108</span>
+          <span class="tap-hint">tap to chant</span>
+        </button>
+      </div>
+
+      <div class="jap-totals-row">
+        <div class="stat-chip">
+          <span class="stat-value" id="japTotalJap">0</span>
+          <span class="stat-label">Total Jap</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-value" id="japTotalMala">0</span>
+          <span class="stat-label">Total Mala</span>
+        </div>
+      </div>
+
+      <div class="jap-actions">
+        <button class="icon-btn" id="japUndoBtn">↺ Undo Tap</button>
+      </div>
+    </section>
+
+    <!-- ---------- NAAM ---------- -->
+    <section class="screen" id="screen-naam">
+      <div class="section-heading">Choose Your Naam</div>
+      <div class="naam-list" id="naamList"></div>
+
+      <div class="section-heading">Add Custom Naam</div>
+      <div class="add-naam-form">
+        <input class="text-input" id="customNaamInput" type="text" maxlength="30" placeholder="e.g. Waheguru" autocomplete="off" />
+        <button id="customNaamAddBtn">Add</button>
+      </div>
+      <p class="form-hint" id="customNaamHint"></p>
+    </section>
+
+    <!-- ---------- PROFILE ---------- -->
+    <section class="screen" id="screen-profile">
+      <div class="section-heading">Profile</div>
+      <div class="profile-card">
+        <div class="profile-row">
+          <span class="p-label">User Name</span>
+          <span style="display:flex; align-items:center; gap:10px;">
+            <span class="p-value" id="profileName">-</span>
+            <button class="edit-link" id="profileEditNameBtn">Edit</button>
+          </span>
+        </div>
+        <div class="profile-row">
+          <span class="p-label">Selected Naam</span>
+          <span style="display:flex; align-items:center; gap:10px;">
+            <span class="p-value" id="profileNaam">-</span>
+            <button class="edit-link" id="profileChangeNaamBtn">Change</button>
+          </span>
+        </div>
+        <div class="profile-row">
+          <span class="p-label">Total Jap</span>
+          <span class="p-value" id="profileTotalJap">0</span>
+        </div>
+        <div class="profile-row">
+          <span class="p-label">Total Mala</span>
+          <span class="p-value" id="profileTotalMala">0</span>
+        </div>
+        <div class="profile-row">
+          <span class="p-label">Tap Sound</span>
+          <button class="edit-link" id="profileSoundToggle">On</button>
+        </div>
+        <div class="profile-row">
+          <span class="p-label">Haptic Feedback</span>
+          <button class="edit-link" id="profileHapticToggle">On</button>
+        </div>
+      </div>
+
+      <div class="section-heading">Milestones</div>
+      <div class="milestone-grid" id="milestoneGrid"></div>
+
+      <div class="section-heading">Certificates</div>
+      <div class="cert-list" id="certList"></div>
+
+      <div class="section-heading">Jap Records</div>
+      <div class="records-list" id="recordsList"></div>
+    </section>
+
+  </div>
+
+  <!-- ============================ BOTTOM NAV ============================ -->
+  <nav id="bottom-nav">
+    <button data-screen="home" class="active"><span class="nav-icon">⌂</span>Home</button>
+    <button data-screen="jap"><span class="nav-icon">◉</span>Jap</button>
+    <button data-screen="naam"><span class="nav-icon">🕉</span>Naam</button>
+    <button data-screen="profile"><span class="nav-icon">☰</span>Profile</button>
+  </nav>
+
+</div>
+
+<!-- ============================ MODAL ============================ -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-sheet" id="modalSheet"></div>
+</div>
+
+<!-- ============================ CELEBRATION ============================ -->
+<div class="celebrate-overlay" id="celebrateOverlay">
+  <div class="celebrate-card" id="celebrateCard">
+    <div class="celebrate-emoji" id="celebrateEmoji">🙏</div>
+    <h2 id="celebrateTitle">1 Mala Complete</h2>
+    <p id="celebrateSub">108 sacred repetitions offered.</p>
+    <div id="celebrateActions"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/state.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/certificate.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

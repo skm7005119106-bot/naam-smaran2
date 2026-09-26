@@ -1,0 +1,9 @@
+{
+  "name": "naam-smaran",
+  "version": "1.0.0",
+  "description": "Naam Smaran - an offline-first Naam Jap chanting counter with Mala tracking, milestones and certificates.",
+  "private": true,
+  "scripts": {
+    "test": "node test/state.test.js"
+  }
+}
